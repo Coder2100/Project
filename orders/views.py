@@ -1,11 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 # import Order model from model
-#from .models import Order
+from .models import Pasta, MenuCatalogue
 
 # Create your views here.
 def index(request):
    # return HttpResponse("Project 3: TODO")
+
    return render(request, "orders/index.html")
 
 def sicilian(request):
@@ -20,5 +21,11 @@ def logout(request):
     return render(request, "orders/logout.html")
 
 def menu(request):
-    return render(request, "orders/menu.html")
+
+   context = {
+      "pastas": Pasta.objects.all(),
+      "MenuCatalogues": MenuCatalogue.objects.all()
+   }
+   return render(request, "orders/menu.html", context)
+
 
