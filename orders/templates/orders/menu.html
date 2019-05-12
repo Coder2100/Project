@@ -97,6 +97,19 @@ cursor: pointer;
     background-color: blue;
     color: white;
 }
+.remove, .add{
+    cursor: pointer;
+    width: 50px;
+   
+}
+.add{
+    background-color: DodgerBlue;
+    color: white;
+}
+.remove{
+    background-color: #239346;
+    color: white;
+}
         </style>
         </head>
         <body>
@@ -105,15 +118,15 @@ cursor: pointer;
         <p class="message">Select your favourate pizza combination!</p>
         
         <div class="tab">
-          <button class="tablinks" onclick="openMenu(event, 'London')" id="defaultOpen">Regular Pizza</button>
-          <button class="tablinks" onclick="openMenu(event, 'Paris')">Sicilian Pizza</button>
-          <button class="tablinks" onclick="openMenu(event, 'Tokyo')">Subs</button>
-          <button class="tablinks" onclick="openMenu(event, 'London')" id="defaultOpen">Pasta</button>
-          <button class="tablinks" onclick="openMenu(event, 'Paris')">Salads</button>
-          <button class="tablinks" onclick="openMenu(event, 'Tokyo')">Dinner Platters</button>
+          <button class="tablinks" onclick="openMenu(event, 'Regular pizzas')" id="defaultOpen">Regular Pizza</button>
+          <button class="tablinks" onclick="openMenu(event, 'Sicilian Pizza')">Sicilian Pizza</button>
+          <button class="tablinks" onclick="openMenu(event, 'Subs')">Subs</button>
+          <button class="tablinks" onclick="openMenu(event, 'Pasta')">Pasta</button>
+          <button class="tablinks" onclick="openMenu(event, 'Salad')">Salads</button>
+          <button class="tablinks" onclick="openMenu(event, 'Dinner Platters')">Dinner Platters</button>
+     
         </div>
-        
-        <div id="London" class="tabcontent">
+        <div id="Regular pizzas" class="tabcontent">
           <h3>Regular Pizza</h3>
           <table>
               <tr>
@@ -121,87 +134,186 @@ cursor: pointer;
               <th>Small (Price)</th>
               <th>Large (Price)</th>
             </tr>
+            {% for regularPizza in regularyPizzas%}
             <tr>
-                <td>Cheese</td>
-                <td>$12.20 <button> +</button></td>
-                <td>$17.45 <button> +</button></td>
+                  
+                <td>{{ regularPizza.name }}</td>
+                <td>${{ regularPizza.small }} <button class="add"> +</button></td>
+                <td>${{ regularPizza.large }} <button class="add"> +</button></td>
+                {% endfor %}
             </tr>
-            <tr>
-                <td>1 topping</td>
-                <td>$13.20</td>
-                <td>$19.4517.45</td>
-             </tr>
-             <tr>
-                    <td>1 topping</td>
-                    <td>$13.20</td>
-                    <td>$19.4517.45</td>
-                 </tr>
-                 <tr>
-                        <td>1 topping</td>
-                        <td>$13.20</td>
-                        <td>$19.4517.45</td>
-                     </tr>
-                     <tr>
-                        <td>1 topping</td>
-                        <td>$13.20</td>
-                        <td>$19.4517.45</td>
-                      </tr>
           </table>
           <br>
           <label>Select Topping</label>
           <form action="" method="POST">
                 {% csrf_token %}
                 <select name="topping" placeholder="topping">
-                        <option value="Andorra"></option>
-                            <option value="Albania">Pepperoni</option>
-                            <option value="Algeria">Sausage</option>
-                            <option value="Andorra">Mushrooms</option>
-                            <option value="Angola">Canadian Bacon</option>
-                            <option value="Antigua &amp; Deps">Pineapple</option>
-                            <option value="Argentina"></option>
-                            <option value="Armenia"></option>
-                            <option value="Australia"></option>
-                            <option value="Austria"></option>
-                            <option value="Azerbaijan"></option>
-                            <option value="Bahamas"></option>
-                            <option value="Bahrain"></option>
-                            <option value="Bangladesh"></option>
+                    {% for topping in toppings %}
+                    <option></option>
+                            <option value="{{ topping.id }}">{{ topping.name }}</option>
+                            {% endfor %}
                 </select>
           <button type="submit" class="cart"> <b>Add to cart </b></button>
         </form>
         </div>
         
-        <div id="Paris" class="tabcontent">
-                <h3>Pasta</h3>
-                {% for pasta in pastas %}
-               <p>Name: {{ pasta.name }} and the price ${{ pasta.price }}</p>
-                {% endfor %}
-                <ul>
-                    {% for category in MenuCatalogues%}
-                    <li>{{ category.name }}</li>
-                    {% endfor %}
-                </ul>
+        <div id="Sicilian Pizza" class="tabcontent">
+                <h3>Sicilian Pizza</h3>
+                <table>
+                        <tr>
+                        <th></th>
+                        <th>Small (Price)</th>
+                        <th>Large (Price)</th>
+                      </tr>
+                      {% for sicilianPizza in sicilianPizzas%}
+                      <tr>
+                            
+                          <td>{{ sicilianPizza.name }}</td>
+                          <td>${{ sicilianPizza.small }} <button class="add"> +</button></td>
+                          <td>${{ sicilianPizza.large }}<button class="add"> +</button></td>
+                          {% endfor %}
+                      </tr>
+                    </table>
+                    <br>
+                    <label>Select Topping</label>
+                    <form action="" method="POST">
+                          {% csrf_token %}
+                          <select name="topping" placeholder="topping">
+                              {% for topping in toppings %}
+                              <option></option>
+                                      <option value="{{ topping.id }}">{{ topping.name }}</option>
+                                      {% endfor %}
+                          </select>
+                    <button type="submit" class="cart"> <b>Add to cart </b></button>
+                  </form>
                
                 <br>
         </div>
-        <div id="Tokyo" class="tabcontent">
-          <h3>Tokyo</h3>
-          <p>Tokyo is the capital of Japan.</p>
+        <div id="Subs" class="tabcontent">
+          <h3>Subs</h3>
+          <table>
+                <tr>
+                <th></th>
+                <th>Small (Price)</th>
+                <th>Large (Price)</th>
+              </tr>
+              {% for s in subs%}
+              <tr>
+                    
+                  <td>{{ s.name }}</td>
+                  <td>${{ s.small }} <button class="add"> +</button></td>
+                  <td>${{ s.large }} <button class="add"> +</button></td>
+                  {% endfor %}
+              </tr>
+            </table>
+            <br>
+            <label>Select Topping</label>
+            <form action="" method="POST">
+                  {% csrf_token %}
+                  <select name="topping" placeholder="topping">
+                      {% for topping in toppings %}
+                      <option></option>
+                              <option value="{{ topping.id }}">{{ topping.name }}</option>
+                              {% endfor %}
+                  </select>
+            <button type="submit" class="cart"> <b>Add to cart </b></button>
+          </form>
+       
+        <br>
         </div>
-        <div id="Tokyo" class="tabcontent">
-                <h3>Tokyo</h3>
-                <p>Tokyo is the capital of Japan.</p>
+        <div id="Pasta" class="tabcontent">
+                <h3>Pasta</h3>
+                <table>
+                        <tr>
+                        <th></th>
+                        <th>Price</th>
+                      </tr>
+                      {% for p in pastas%}
+                      <tr>
+                            
+                          <td>{{ p.name }}</td>
+                          <td>${{ p.price }} <button class="add"> +</button></td>
+                          {% endfor %}
+                      </tr>
+                    </table>
+                    <br>
+                    <label>Select Topping</label>
+                    <form action="" method="POST">
+                          {% csrf_token %}
+                          <select name="topping" placeholder="topping">
+                              {% for topping in toppings %}
+                              <option></option>
+                                      <option value="{{ topping.id }}">{{ topping.name }}</option>
+                                      {% endfor %}
+                          </select>
+                    <button type="submit" class="cart"> <b>Add to cart </b></button>
+                  </form>  
         </div>
-        <div id="Tokyo" class="tabcontent">
-              <h3>Tokyo</h3>
-              <p>Tokyo is the capital of Japan.</p>
+        <div id="Salad" class="tabcontent">
+              <h3>Salads</h3>
+              <table>
+                    <tr>
+                    <th></th>
+                    <th>Price</th>
+                  </tr>
+                  {% for s in salads%}
+                  <tr>
+                        
+                      <td>{{ s.name }}</td>
+                      <td>${{ s.price }} <button class="add"> +</button></td>
+                      {% endfor %}
+                  </tr>
+                </table>
+                <br>
+                <label>Select Topping</label>
+                <form action="" method="POST">
+                      {% csrf_token %}
+                      <select name="topping" placeholder="topping">
+                          {% for topping in toppings %}
+                          <option></option>
+                                  <option value="{{ topping.id }}">{{ topping.name }}</option>
+                                  {% endfor %}
+                      </select>
+                <button type="submit" class="cart"> <b>Add to cart </b></button>
+              </form>
         </div>
+        <div id="Dinner Platters" class="tabcontent">
+                <h3>Dinner Platters</h3>
+                <table>
+                        <tr>
+                        <th></th>
+                        <th>Small (Price)</th>
+                        <th>Large (Price)</th>
+                      </tr>
+                      {% for d in dinnerPlatters%}
+                      <tr>
+                            
+                          <td>{{ d.name }}</td>
+                          <td>${{ d.small }} <button class="add"> +</button></td>
+                          <td>${{ d.large }} <button class="add"> +</button></td>
+                          {% endfor %}
+                      </tr>
+                    </table>
+                    <br>
+                    <label>Select Topping</label>
+                    <form action="" method="POST">
+                          {% csrf_token %}
+                          <select name="topping" placeholder="topping">
+                              {% for topping in toppings %}
+                              <option></option>
+                                      <option value="{{ topping.id }}">{{ topping.name }}</option>
+                                      {% endfor %}
+                          </select>
+                    <button type="submit" class="cart"> <b>Add to cart </b></button>
+                  </form>
+                
+         </div>
         <div class="rightContent">
             <h2>My shopping cart</h2>
             <h3>Regular Pizza</h3>
             <p> Cheese - $17.45 </p>
             <h3>Toppings</h3>
-            <p><button> - </button> Eggplant </p>
+            <p><button class="remove"> - </button> Eggplant </p>
             <p> <button> - </button> Mushrooms </p>
             <hr>
             <h4>Total Price: $500.00 </h4>
@@ -227,18 +339,5 @@ cursor: pointer;
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
         </script>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
-        <br>    <br>
+       
 {% endblock %}
