@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 # Create your models here.
+""""
 class RegularPizza(models.Model):
     name=models.CharField(max_length=64)
     small=models.DecimalField(max_digits=4,decimal_places=2)
@@ -57,7 +58,7 @@ class Topping(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-
+"""
 
 
 

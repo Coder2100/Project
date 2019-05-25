@@ -20,5 +20,6 @@ urlpatterns = [
     path("", include("orders.urls")),
    
     path("admin/", admin.site.urls),
+    path("", include("menus.urls")),
 ]
 
