@@ -33,6 +33,7 @@ input {
   font-size: 17px;
   font-family: Raleway;
   border: 1px solid #aaaaaa;
+  margin: 10px;
 }
 
 #submitButton {
@@ -50,19 +51,15 @@ button:hover {
 }
 
 </style>
-<form id="loginForm" action="" method="POST">
+<form id="loginForm" action="{% url 'accounts:register' %}" method="POST">
+  {% csrf_token %}
   <h1>Register:</h1>
-  Name:
-      <p><input placeholder="Name..." name="name"></p>
-  Username:
-    <p><input placeholder="Username..." name="username"></p>
-  Password:
-    <p><input placeholder="Password..."  name="password" type="password"></p>
+  {% csrf_token %}
+  {{ form }}
   <div style="overflow:auto;">
     <div style="float:left;">
       <button type="submit" id="submitButton">Submit</button>
     </div>
   </div>
 </form>
-
 {% endblock %}

@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import Pasta, MenuCatalogue, Topping, RegularPizza, SicilianPizza, SicilianPizza, Sub,Salad, DinnerPlatter
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
+@login_required(login_url='accounts:login')
 def menu(request):
-
    context = {
       "pastas": Pasta.objects.all(),
       "menuCatalogues": MenuCatalogue.objects.all(),
