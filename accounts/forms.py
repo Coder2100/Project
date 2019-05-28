@@ -67,7 +67,7 @@ class MyUserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email1', 'email2', 'password']
-
+# doc reference
     # https://docs.djangoproject.com/en/2.1/ref/forms/validation/#cleaning-and-validating-fields-that-depend-on-each-other
     def clean(self):
         super().clean()

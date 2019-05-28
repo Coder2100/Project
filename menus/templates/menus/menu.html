@@ -113,7 +113,6 @@ cursor: pointer;
         </style>
         </head>
         <body>
-        
         <h2 class="message">Our Main Menu</h2>
         <p class="message">Select your favourate pizza combination!</p>
         
@@ -127,21 +126,27 @@ cursor: pointer;
      
         </div>
         <div id="Regular pizzas" class="tabcontent">
+         
           <h3>Regular Pizza</h3>
+          <button>View Cart</button>
           <table>
               <tr>
-              <th></th>
+              <th>Item</th>
               <th>Small (Price)</th>
               <th>Large (Price)</th>
             </tr>
-            {% for regularPizza in regularyPizzas%}
+            {% for regularPizza in regularyPizzas %}
             <tr>
-                  
+  
                 <td>{{ regularPizza.name }}</td>
-                <td>${{ regularPizza.small }} <button class="add"> +</button></td>
+                
+                <td>${{ regularPizza.small }} <a href="#"><button class="add" > +</button></a></td>
                 <td>${{ regularPizza.large }} <button class="add"> +</button></td>
+               
+            
                 {% endfor %}
             </tr>
+       
           </table>
           <br>
           <label>Select Topping</label>
@@ -153,12 +158,13 @@ cursor: pointer;
                             <option value="{{ topping.id }}">{{ topping.name }}</option>
                             {% endfor %}
                 </select>
-          <button type="submit" class="cart"> <b>Add to cart </b></button>
+          <button type="submit" class="cart"> <b>Add Topping </b></button>
         </form>
         </div>
         
         <div id="Sicilian Pizza" class="tabcontent">
                 <h3>Sicilian Pizza</h3>
+                
                 <table>
                         <tr>
                         <th></th>
@@ -169,11 +175,15 @@ cursor: pointer;
                       <tr>
                             
                           <td>{{ sicilianPizza.name }}</td>
-                          <td>${{ sicilianPizza.small }} <button class="add"> +</button></td>
+                          <td>${{ sicilianPizza.small }} <a href="#"><button class="add" > +</button></a></td>
+                          
                           <td>${{ sicilianPizza.large }}<button class="add"> +</button></td>
                           {% endfor %}
+                          
                       </tr>
+                    
                     </table>
+                   
                     <br>
                     <label>Select Topping</label>
                     <form action="" method="POST">
@@ -193,7 +203,7 @@ cursor: pointer;
           <h3>Subs</h3>
           <table>
                 <tr>
-                <th></th>
+                <th>Item</th>
                 <th>Small (Price)</th>
                 <th>Large (Price)</th>
               </tr>
@@ -207,18 +217,6 @@ cursor: pointer;
               </tr>
             </table>
             <br>
-            <label>Select Topping</label>
-            <form action="" method="POST">
-                  {% csrf_token %}
-                  <select name="topping" placeholder="topping">
-                      {% for topping in toppings %}
-                      <option></option>
-                              <option value="{{ topping.id }}">{{ topping.name }}</option>
-                              {% endfor %}
-                  </select>
-            <button type="submit" class="cart"> <b>Add to cart </b></button>
-          </form>
-       
         <br>
         </div>
         <div id="Pasta" class="tabcontent">
@@ -237,17 +235,6 @@ cursor: pointer;
                       </tr>
                     </table>
                     <br>
-                    <label>Select Topping</label>
-                    <form action="" method="POST">
-                          {% csrf_token %}
-                          <select name="topping" placeholder="topping">
-                              {% for topping in toppings %}
-                              <option></option>
-                                      <option value="{{ topping.id }}">{{ topping.name }}</option>
-                                      {% endfor %}
-                          </select>
-                    <button type="submit" class="cart"> <b>Add to cart </b></button>
-                  </form>  
         </div>
         <div id="Salad" class="tabcontent">
               <h3>Salads</h3>
@@ -265,17 +252,7 @@ cursor: pointer;
                   </tr>
                 </table>
                 <br>
-                <label>Select Topping</label>
-                <form action="" method="POST">
-                      {% csrf_token %}
-                      <select name="topping" placeholder="topping">
-                          {% for topping in toppings %}
-                          <option></option>
-                                  <option value="{{ topping.id }}">{{ topping.name }}</option>
-                                  {% endfor %}
-                      </select>
-                <button type="submit" class="cart"> <b>Add to cart </b></button>
-              </form>
+              
         </div>
         <div id="Dinner Platters" class="tabcontent">
                 <h3>Dinner Platters</h3>
@@ -295,19 +272,9 @@ cursor: pointer;
                       </tr>
                     </table>
                     <br>
-                    <label>Select Topping</label>
-                    <form action="" method="POST">
-                          {% csrf_token %}
-                          <select name="topping" placeholder="topping">
-                              {% for topping in toppings %}
-                              <option></option>
-                                      <option value="{{ topping.id }}">{{ topping.name }}</option>
-                                      {% endfor %}
-                          </select>
-                    <button type="submit" class="cart"> <b>Add to cart </b></button>
-                  </form>
-                
+                   
          </div>
+         <!------shopping cart-->
         <div class="rightContent">
             <h2>My shopping cart</h2>
             <h3>Regular Pizza</h3>
