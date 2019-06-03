@@ -16,7 +16,7 @@
           <td>
             {{ item.product.name }}
             <span class="pull-right">
-              <a href="{% url 'shopping_cart:delete_item' item.id %}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
+              <a href="{% url 'orders:delete_item' item.id %}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
                 <i class="fas fa-trash"></i>
               </a>
             </span>

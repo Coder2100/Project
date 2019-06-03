@@ -13,5 +13,6 @@ urlpatterns = [
     path("",index, name="index"),
     url(r'^sicilian/$',sicilian , name='sicilian'),
     url(r'^add-to-cart/(?P<item_id>[-\w]+)/$', add_to_cart, name="add_to_cart"),
+    url(r'^order-summary/$', order_details, name="order_summary"),
 ]
 
