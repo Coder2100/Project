@@ -2,13 +2,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import (
     authenticate,
     login,
     logout,
 )
-from django.contrib.auth import authenticate
+#from django.contrib.auth import authenticate
 from .forms import MyUserLoginForm, MyUserRegistrationForm
 from . models import Profile
 from orders.models import Order
@@ -194,10 +195,10 @@ def delete(request):
 
     return JsonResponse({"success": True})
 
+
 def checkout(request):
-
-
-    stripe.api_key = "sk_test_yEFWvn0Ao2NUjFenAxUVcBOA"
+    amount = request.POST['amount']
+    stripe.api_key = ""
 
     if request.method == 'POST':
         token = request.POST['stripeToken']
@@ -207,7 +208,7 @@ def checkout(request):
         date = datetime.now()
     try:
         charge = stripe.Charge.create(
-            amount      =request.POST['amount'],
+            amount      = amount,
             currency    = "usd",
             source      = token,
             description = f"Customer: {username}, on {date.day}/{date.month}/{date.year} at {date.hour}:{date.minute}"
@@ -224,9 +225,9 @@ def checkout(request):
             username=order.username, order_status='Confirmed')
             confirmation.save()
             confirmation.pizza_toppings.set(order.pizza_toppings.all())
+            confirmation.sub_additions.set(order.sub_additions.all())
             confirmation.save()
             order.delete()
 
         confirmations = Confirmations.objects.filter(username=request.user.username, order_status='Confirmed')
-        return render(request, "orders/confirmation.html" , {"confirmations": confirmations} )
-
+        return render(request, "accounts/confirmation.html" , {"confirmations": confirmations} )
