@@ -139,7 +139,7 @@ cursor: pointer;
             <tr>
   
                 <td>{{ regularPizza.name }}</td>
-                <td>${{ regularPizza.small }} <a href="{% url 'orders:add_to_cart' regular.id %}"><button class="add" > +</button></a></td>
+                <td>${{ regularPizza.small }} <a href="#"><button class="add" > +</button></a></td>
                 <td>${{ regularPizza.large }} <button class="add"> +</button></td>
            
                 {% endfor %}

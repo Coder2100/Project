@@ -2,15 +2,25 @@ from django.db import models
 from django.conf import settings
 
 # Create your models here.
-class RegularPizza(models.Model):
+class Pizza(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.name}"
+class Topping(models.Model):
     name=models.CharField(max_length=64)
+    def __str__(self):
+        return f"{self.name}"
+
+class RegularPizza(models.Model):
+    name= models.ForeignKey(Pizza, on_delete=models.CASCADE, related_name="regular_price")
     small=models.DecimalField(max_digits=4,decimal_places=2)
     large=models.DecimalField(max_digits=4,decimal_places=2)
     
     def __str__(self):
         return f"{self.name} - {self.small} -{self.large}"
 class SicilianPizza(models.Model):
-    name=models.CharField(max_length=64)
+    name=models.ForeignKey(Pizza, on_delete=models.CASCADE, related_name="sicilian_price")
     small=models.DecimalField(max_digits=4,decimal_places=2)
     large=models.DecimalField(max_digits=4,decimal_places=2)
 
@@ -51,11 +61,15 @@ class MenuCatalogue(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+        
+class Additions(models.Model):
+    addition = models.CharField(max_length=30)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
 
-class Topping(models.Model):
-    name=models.CharField(max_length=64)
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.addition}"
+
+
 
 
 
