@@ -21,7 +21,8 @@ class RegularPizza(models.Model):
     def __str__(self):
         return f"{self.name} - {self.small} -{self.large}"
 class SicilianPizza(models.Model):
-    name=models.ForeignKey(Pizza, on_delete=models.CASCADE, related_name="sicilian_price")
+    pizza=models.ForeignKey(Pizza, on_delete=models.CASCADE, related_name="sicilian_price")
+    name=models.CharField(max_length=64)
     small=models.DecimalField(max_digits=4,decimal_places=2)
     large=models.DecimalField(max_digits=4,decimal_places=2)
 

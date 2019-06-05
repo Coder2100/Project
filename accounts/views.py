@@ -154,12 +154,6 @@ def added(request):
     if topping3: topping_to_add3 = Toppings.objects.get(id=topping3)
     if topping4: topping_to_add4 = Toppings.objects.get(id=topping4)
     if topping5: topping_to_add5 = Toppings.objects.get(id=topping5)
-
-   
-
-
-
-
     order = Orders(dish=dish, pizza_type=type, size=size, price=price, username=request.user.username, order_status="draft")
 
     order.save()
@@ -211,12 +205,9 @@ def checkout(request):
 
         username = request.POST['username']
         date = datetime.now()
-
-
-
     try:
         charge = stripe.Charge.create(
-            amount      = amount,
+            amount      =request.POST['amount'],
             currency    = "usd",
             source      = token,
             description = f"Customer: {username}, on {date.day}/{date.month}/{date.year} at {date.hour}:{date.minute}"
