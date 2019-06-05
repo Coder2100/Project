@@ -4,6 +4,12 @@ from menus.models import RegularPizza
 from django.db.models.signals import post_save
 import stripe
 
+from django.contrib.auth import (
+    authenticate,
+    login,
+    logout,
+)
+from django.contrib.auth import authenticate
 
 # Create your models here.
 #user profile
@@ -24,3 +30,4 @@ def post_save_profile_create(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(post_save_profile_create, sender=settings.AUTH_USER_MODEL)
+

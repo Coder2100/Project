@@ -13,7 +13,8 @@ class Topping(models.Model):
         return f"{self.name}"
 
 class RegularPizza(models.Model):
-    name= models.ForeignKey(Pizza, on_delete=models.CASCADE, related_name="regular_price")
+    pizza= models.ForeignKey(Pizza, on_delete=models.CASCADE, related_name="regular_price")
+    name=models.CharField(max_length=64)
     small=models.DecimalField(max_digits=4,decimal_places=2)
     large=models.DecimalField(max_digits=4,decimal_places=2)
     

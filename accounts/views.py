@@ -1,5 +1,6 @@
 
 from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.db import models
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import (
@@ -180,7 +181,7 @@ def cart(request):
 
     orders = Orders.objects.filter(username=request.user.username)
 
-    return render(request, "orders/cart.html", {"orders": orders})
+    return render(request, "menus/menu.html", {"orders": orders})
 
 def delete(request):
     id = request.POST["id"]
