@@ -12,7 +12,6 @@ from django.contrib.auth import (
 #from django.contrib.auth import authenticate
 from .forms import MyUserLoginForm, MyUserRegistrationForm
 from . models import Profile
-from orders.models import Order
 from menus.models import Topping, Additions
 import stripe 
 from datetime import datetime
@@ -68,7 +67,7 @@ def my_profile(request):
     context = {
       'my_orders': my_orders
       }
-    return render(request, "accounts/profile.html", context)
+    return render(request, "accounts/index.html", context)
 class Orders(models.Model):
     dish = models.CharField(max_length=40)
     pizza_type = models.CharField(max_length=40, null=True, blank=True)
