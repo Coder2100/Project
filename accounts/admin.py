@@ -1,10 +1,21 @@
 from django.contrib import admin
+
+from import_export.admin import ImportExportModelAdmin
 from .models import Profile
 from .views import Orders, Confirmations
-# Register your models here.
-class OrderAdmin(admin.ModelAdmin):
-    filter_horizontal = ("pizza_toppings", "sub_additions")
+
+@admin.register(Confirmations)
+class ExportConfirmation(ImportExportModelAdmin):
+    list_display = ('title','price', 'order_status', 'username')
+    list_filter = ('time',)
+    pass
+@admin.register(Orders)
+class ExportOrders(ImportExportModelAdmin):
+    list_display = ('title','price', 'order_status', 'username')
+    list_filter = ('time',)
+    pass
 
 admin.site.register(Profile)
-admin.site.register(Orders, OrderAdmin)
-admin.site.register(Confirmations)
+
+admin.site.site_header =  "Pinocchio's Pizza & Subs"
+

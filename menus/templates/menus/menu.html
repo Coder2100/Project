@@ -1,4 +1,6 @@
 {% extends "orders/base.html" %}
+{% load static %}
+
 
 {% block title %}
 Pizza | Menu
@@ -16,7 +18,7 @@ Pizza | Menu
           height: 400px;
           padding-left: 15px;
         }
-        
+
         /* Style the buttons inside the tab */
         .tab button {
           display: block;
@@ -31,18 +33,18 @@ Pizza | Menu
           transition: 0.3s;
           font-size: 17px;
         }
-        
+
         /* Change background color of buttons on hover */
         .tab button:hover {
           background-color: #be0027;
-       
+
         }
-        
+
         /* Create an active/current "tab button" class */
         .tab button.active {
           background-color: #ccc;
         }
-        
+
         /* Style the tab content */
         .tabcontent {
           float: left;
@@ -100,10 +102,10 @@ cursor: pointer;
 }
 .remove, .add{
     cursor: pointer;
-    width: 50px;
-   
+    width: 130px;
+
 }
-.add, #dd{
+.add{
     background-color: DodgerBlue;
     color: white;
 }
@@ -112,24 +114,23 @@ cursor: pointer;
     color: white;
 }
         </style>
-        </head>
-        <body>
+
         <h2 class="message">Our Main Menu</h2>
         <p class="message">Select your favourate pizza combination!</p>
-        
+
         <div class="tab">
-          <button class="tablinks" onclick="openMenu(event, 'Regular pizzas')" id="defaultOpen">Regular Pizza</button>
-          <button class="tablinks" onclick="openMenu(event, 'Sicilian Pizza')">Sicilian Pizza</button>
-          <button class="tablinks" onclick="openMenu(event, 'Subs')">Subs</button>
-          <button class="tablinks" onclick="openMenu(event, 'Pasta')">Pasta</button>
-          <button class="tablinks" onclick="openMenu(event, 'Salad')">Salads</button>
-          <button class="tablinks" onclick="openMenu(event, 'Dinner Platters')">Dinner Platters</button>
-     
+          <button class="leftNav" onclick="openMenu(event, 'Regular pizzas')" id="defaultOpen">Regular Pizza</button>
+          <button class="leftNav" onclick="openMenu(event, 'Sicilian Pizza')">Sicilian Pizza</button>
+          <button class="leftNav" onclick="openMenu(event, 'Subs')">Subs</button>
+          <button class="leftNav" onclick="openMenu(event, 'Pasta')">Pasta</button>
+          <button class="leftNav" onclick="openMenu(event, 'Salad')">Salads</button>
+          <button class="leftNav" onclick="openMenu(event, 'Dinner Platters')">Dinner Platters</button>
+
         </div>
         <div id="Regular pizzas" class="tabcontent">
-         
+
           <h3>Regular Pizza</h3>
-          <button>View Cart</button>
+
           <table>
               <tr>
               <th>Item</th>
@@ -138,34 +139,24 @@ cursor: pointer;
             </tr>
             {% for regularPizza in regularyPizzas %}
             <tr>
-  
+
                 <td>{{ regularPizza.name }}</td>
-                <td>${{ regularPizza.small }} &nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-dish="{{ regularPizza.name }}" data-type="Regular Pizza" data-size="Small" data-price="{{ regularPizza.small }}" type="submit" class="btn btn-secondary btn-sm" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
-                    {% elif forloop.counter0 == 1 %}Choose Topping{% else %}Choose Toppings{% endif %}</button>{% endif %}</td>
-                <td>${{ regularPizza.large }} {% if user.is_authenticated %}{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-dish="{{ regularPizza.name }}" data-type="Regular Pizza" data-size="Large" data-price="{{ regularPizza.large }}" type="submit" class="btn btn-secondary btn-sm" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
-                    {% elif forloop.counter0 == 1 %}Choose Topping{% else %}Choose Toppings{% endif %}</button>{% endif %}</td>
-           
+                <td>${{ regularPizza.small }} &nbsp&nbsp{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-title="{{ regularPizza.name }}" data-type="Regular Pizza" data-size="Small" data-price="{{ regularPizza.small }}" type="submit" class="add" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
+                    {% elif forloop.counter0 == 1 %}Add Topping{% else %}Add Toppings{% endif %}</button></td>
+                <td>${{ regularPizza.large }} {% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-title="{{ regularPizza.name }}" data-type="Regular Pizza" data-size="Large" data-price="{{ regularPizza.large }}" type="submit" class="add" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
+                    {% elif forloop.counter0 == 1 %}Add Topping{% else %}Add Toppings{% endif %}</button></td>
+
                 {% endfor %}
             </tr>
           </table>
-  
+
           <br>
-          <label>Select Topping</label>
-          <form action="" method="POST">
-                {% csrf_token %}
-                <select name="topping" placeholder="topping">
-                    {% for topping in toppings %}
-                    <option></option>
-                            <option value="{{ topping.id }}">{{ topping.name }}</option>
-                            {% endfor %}
-                </select>
-          <button type="submit" class="cartButton"> <b>Add Topping </b></button>
-        </form>
+
         </div>
-        
+
         <div id="Sicilian Pizza" class="tabcontent">
                 <h3>Sicilian Pizza</h3>
-                
+
                 <table>
                         <tr>
                         <th></th>
@@ -174,39 +165,28 @@ cursor: pointer;
                       </tr>
                       {% for sicilianPizza in sicilianPizzas%}
                       <tr>
-                            
+
                           <td>{{ sicilianPizza.name }}</td>
-                          <td>${{ sicilianPizza.small }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-dish="{{ sicilianPizza.name }}" data-type="Sicilian Pizza" data-size="Small" data-price="{{sicilianPizza.small }}" type="submit" class="btn btn-secondary btn-sm" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
-                  {% elif forloop.counter0 == 1 %}Choose Topping{% else %}Choose Toppings{% endif %}</button>{% endif %}</td>
-                  
-                          
-                          <td>${{ sicilianPizza.large }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-dish="{{ sicilianPizza.name }}" data-type="Sicilian Pizza" data-size="Large" data-price="{{ sicilianPizza.large }}" type="submit" class="btn btn-secondary btn-sm"  {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
-                  {% elif forloop.counter0 == 1 %}Choose Topping{% else %}Choose Toppings{% endif %}</button>{% endif %}</td>
+                          <td>${{ sicilianPizza.small }}&nbsp&nbsp{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-title="{{ sicilianPizza.name }}" data-type="Sicilian Pizza" data-size="Small" data-price="{{sicilianPizza.small }}" type="submit" class="add" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
+                  {% elif forloop.counter0 == 1 %}Add Topping{% else %}Add Toppings{% endif %}</button></td>
+
+
+                          <td>${{ sicilianPizza.large }}&nbsp&nbsp{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-title="{{ sicilianPizza.name }}" data-type="Sicilian Pizza" data-size="Large" data-price="{{ sicilianPizza.large }}" type="submit" class="add"  {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
+                  {% elif forloop.counter0 == 1 %}Add Topping{% else %}Add Toppings{% endif %}</button></td>
                           {% endfor %}
-                          
+
                       </tr>
-                    
+
                     </table>
                      <br>
-                    <label>Select Topping</label>
-                    <form action="" method="POST">
-                          {% csrf_token %}
-                          <select name="topping" placeholder="topping">
-                              {% for topping in toppings %}
-                              <option></option>
-                                      <option value="{{ topping.id }}">{{ topping.name }}</option>
-                                      {% endfor %}
-                          </select>
-                    <button type="submit" class="cartButton"> <b>Add to cart </b></button>
-                  </form>
-               
+
                 <br>
         </div>
          <script>
   document.addEventListener("DOMContentLoaded", () => {
 
     let selector = document.querySelector('.selector');
-    let buttons = document.querySelectorAll('.btn-secondary');
+    let buttons = document.querySelectorAll('.add');
     let selectors_box = document.querySelector('#selectors_box');
     buttons.forEach(button => {
       button.onclick = function() {
@@ -224,8 +204,8 @@ cursor: pointer;
 
           let csrf = button.previousSibling.value;
           let data = new FormData();
-          data.append("dish", this.dataset.dish);
-          data.append("type", this.dataset.type);
+          data.append("title", this.dataset.title);
+         // data.append("type", this.dataset.type);
           data.append("size", this.dataset.size);
           data.append("price", this.dataset.price);
 
@@ -249,7 +229,6 @@ cursor: pointer;
 
             request.onload = () => {
               let data = JSON.parse(request.responseText);
-            //  document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
             }
           }
         }else{
@@ -257,8 +236,8 @@ cursor: pointer;
 
           let request = new XMLHttpRequest;
           let data = new FormData();
-          data.append("dish", this.dataset.dish);
-          data.append("type", this.dataset.type);
+          data.append("title", this.dataset.title);
+         // data.append("type", this.dataset.type);
           data.append("size", this.dataset.size);
           data.append("price", this.dataset.price);
 
@@ -268,7 +247,6 @@ cursor: pointer;
 
           request.onload = () => {
             let data = JSON.parse(request.responseText);
-         //   document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
         }
       }
     }
@@ -285,36 +263,14 @@ cursor: pointer;
               </tr>
               {% for s in subs%}
               <tr>
-                    
+
                   <td>{{ s.name }}</td>
-                  <td>${% if s.sub == 'Sausage, Peppers & Onions' %}{% else %}{{ s.small }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-additions="{% for addition in s.additions.all %}{{ addition.addition }}:{{ addition.price }},{% endfor %}" data-dish="{{ s.sub }}" data-type="" data-size="Small" data-price="{{ s.small }}" type="button" class="btn btn-secondary btn-sm subs" data-toggle="modal" data-target="#addAdditions">Add Cart</button>{% endif %}{% endif %}</td>
-                  <td>{{ s.large }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-additions="{% for addition in s.additions.all %}{{ addition.addition }}:{{ addition.price }},{% endfor %}" data-dish="{{ s.sub }}" data-type="" data-size="Large" data-price="{{ s.large }}" type="button" class="btn btn-secondary btn-sm subs" data-toggle="modal" data-target="#addAdditions">Add Cart</button>{% endif %}</td>
+                  <td>${% if s.sub == 'Sausage, Peppers & Onions' %}{% else %}{{ s.small }}&nbsp&nbsp{% csrf_token %}<button data-title="{{ s.sub }}" data-type="" data-size="Small" data-price="{{ s.small }}" type="button" class="add subs" data-toggle="modal">Add Cart</button>{% endif %}</td>
+                  <td>{{ s.large }}&nbsp&nbsp{% csrf_token %}<button data-title="{{ s.sub }}" data-type="" data-size="Large" data-price="{{ s.large }}" type="button" class="add subs" data-toggle="modal" >Add Cart</button></td>
                   {% endfor %}
               </tr>
             </table>
-            <!-- Modal -->
-        <div class="modal fade" id="addAdditions" tabindex="-1" role="dialog" aria-labelledby="Add Toppings to Your Pizza" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">It's Time for Extras!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <p>Do you want to add anything?</p>
-                  <div class="form-group col-8" id="container">
 
-                  </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">Close</button>
-                <button type="button" class="btn btn-primary" id="addToCart">Add to Cart</button>
-              </div>
-            </div>
-          </div>
-        </div>
             <br>
         <br>
         </div>
@@ -327,13 +283,12 @@ cursor: pointer;
                       </tr>
                       {% for p in pastas%}
                       <tr>
-                            
                           <td>{{ p.name }}</td>
-                          <td>${{ p.price }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-dish="{{ p.name }}" data-type="" data-size="" data-price="{{ p.price }}" type="button" class="btn btn-secondary btn-sm">Add Cart</button>{% endif %}</td>
+                          <td>${{ p.price }}&nbsp&nbsp{% csrf_token %}<button data-title="{{ p.name }}" data-type="" data-size="" data-price="{{ p.price }}" type="button" class="add">Add Cart</button></td>
                           {% endfor %}
-                      </tr>
-                    </table>
-                    <br>
+                  </tr>
+            </table>
+                <br>
         </div>
         <div id="Salad" class="tabcontent">
               <h3>Salads</h3>
@@ -343,9 +298,9 @@ cursor: pointer;
                     <th>Price</th>
                   </tr>
                   {% for s in salads%}
-                  <tr>  
+                  <tr>
                       <td>{{ s.name }}</td>
-                      <td>$ {{ s.price }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-dish="{{ s.name }}" data-type="" data-size="" data-price="{{ s.price }}" type="button" class="btn btn-secondary btn-sm">Add Cart</button>{% endif %}</td>
+                      <td>$ {{ s.price }}&nbsp&nbsp{% csrf_token %}<button data-title="{{ s.name }}" data-type="" data-size="" data-price="{{ s.price }}" type="button" class="add">Add Cart</button></td>
                       {% endfor %}
                   </tr>
                 </table>
@@ -353,7 +308,7 @@ cursor: pointer;
                 <script>
                 document.addEventListener("DOMContentLoaded", () => {
 
-    let buttons = document.querySelectorAll('.btn-secondary');
+    let buttons = document.querySelectorAll('.add');
     buttons.forEach(button => {
       button.onclick = function() {
 
@@ -361,8 +316,8 @@ cursor: pointer;
 
         let request = new XMLHttpRequest;
         let data = new FormData();
-        data.append("dish", this.dataset.dish);
-        data.append("type", this.dataset.type);
+        data.append("title", this.dataset.title);
+       // data.append("type", this.dataset.type);
         data.append("size", this.dataset.size);
         data.append("price", this.dataset.price);
 
@@ -372,7 +327,6 @@ cursor: pointer;
 
         request.onload = () => {
           let data = JSON.parse(request.responseText);
-          document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
           console.log(data);
         }
 
@@ -391,18 +345,17 @@ cursor: pointer;
                       </tr>
                       {% for d in dinnerPlatters%}
                       <tr>
-                            
+
                           <td>{{ d.name }}</td>
-                          <td>${{ d.small }} &nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-dish="{{ d.name }}" data-type="" data-size="Small" data-price="{{ d.small }}" type="button" class="btn btn-secondary btn-sm">Add Cart</button>{% endif %}</td>
-                          <td>${{ d.large }} &nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-dish="{{ d.large }}" data-type="" data-size="Large" data-price="{{ d.large }}" type="button" class="btn btn-secondary btn-sm">Add Cart</button>{% endif %}</td>
+                          <td>${{ d.small }} &nbsp&nbsp{% csrf_token %}<button data-title="{{ d.name }}" data-type="" data-size="Small" data-price="{{ d.small }}" type="button" class="add">Add Cart</button></td>
+                          <td>${{ d.large }} &nbsp&nbsp{% csrf_token %}<button data-title="{{ d.large }}" data-type="" data-size="Large" data-price="{{ d.large }}" type="button" class="add">Add Cart</button></td>
                           {% endfor %}
                       </tr>
                     </table>
                     <br>
-                     <script >
+        <script >
   document.addEventListener("DOMContentLoaded", () => {
-
-          let buttons = document.querySelectorAll('.btn-secondary');
+          let buttons = document.querySelectorAll('.add');
           buttons.forEach(button => {
             button.onclick = function() {
 
@@ -410,8 +363,8 @@ cursor: pointer;
 
               let request = new XMLHttpRequest;
               let data = new FormData();
-              data.append("dish", this.dataset.dish);
-              data.append("type", this.dataset.type);
+              data.append("title", this.dataset.title);
+             // data.append("type", this.dataset.type);
               data.append("size", this.dataset.size);
               data.append("price", this.dataset.price);
 
@@ -421,29 +374,25 @@ cursor: pointer;
 
               request.onload = () => {
                 let data = JSON.parse(request.responseText);
-                //document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
-                console.log(data);
               }
 
             }
           });
         });
   </script>
-                   
-         </div>
-
-                           <!-- Modal -->
+  </div>
+  <!-- Modal -->
   <div class="modal fade" id="addToppings" tabindex="-1" role="dialog" aria-labelledby="Add Toppings to Your Pizza" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">It's Time for Toppings!</h5>
+          <h5 class="text-center" id="exampleModalLabel" >Toppings</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Choose your favourites toppings for your Pizza</p>
+          <p>Select Additional Topping</p>
             <div class="form-group col-4" id="selectors_box">
               <select class="selector" class="form-control">
                 {% for topping in toppings%}
@@ -453,14 +402,14 @@ cursor: pointer;
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="addToCart">Add to Cart</button>
+          <button type="button" class="remove" data-dismiss="modal">Ignore</button>
+          <button type="button" class="add" id="addToCart">Add to Cart</button>
         </div>
       </div>
     </div>
   </div>
 
-         <!------shopping cart-->
+   <!----Order Summary-->
    <div class="rightContent">
        <h2>My Shopping cart</h2>
        <div class="container">
@@ -468,41 +417,33 @@ cursor: pointer;
       <div class="col-11">
         <div class="container cart" id="main_container">
           <div class="row header">
-            <div class="col">Item</div>
-            <div class="col">Type</div>
+            <div class="col">Item Description</div>
             <div class="col">Size</div>
-            <div class="col">Toppings</div>
-           
             <div class="col">Price</div>
-            <div class="col-1"></div>
           </div>
           {% for order in orders %}
             <div class="row cart-row">
-              <div class="col">{{ order.dish }}</div>
-              <div class="col">{% if order.pizza_type is not None %}{{ order.pizza_type }}{% endif %}</div>
+              <div class="col">{{ order.title }}</div>
               <div class="col">{% if order.size is not None %}{{ order.size }}{% else %}&nbsp{% endif %}</div>
               <div class="col">{% for topping in order.pizza_toppings.all %}{{ topping }}<br>{% if toppings == ''  %}&nbsp{% endif %}{% endfor %}</div>
-              <div class="col">{% for addition in order.sub_additions.all %}{{ addition }}<br>{% endfor %}</div>
               <div class="col price">{{ order.price }}</div>
-              <div class="col-1">{% csrf_token %}<img width="15px" data-id="{{ order.id }}" class="cancel" height="15px"></div>
             </div>
           {% endfor %}
           <div class="row">
             <div class="col"></div>
             <div class="col"></div>
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col"></div>
+             <div class="col"></div>
+             <div class="col"></div>
             <div class="col" style="font-weight: bold;">Total</div>
             <div class="col-1"></div>
           </div>
           <div class="row">
             <div class="col"></div>
             <div class="col"></div>
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col" id="total"></div>
+             <div class="col"></div>
+              <div class="col"></div>
+              <div class="col"></div>
+            <div class="col" id="total"> </div>
             <div class="col-1"></div>
           </div>
         </div>
@@ -512,6 +453,7 @@ cursor: pointer;
   <div class="container">
     <div class="row justify-content-end" >
       <div class="col-4"  style="visibility: hidden;" id="submit">
+      <!-- credit for stripe checkout: https://www.youtube.com/watch?v=6aQanCJZx04&list=PLLRM7ROnmA9E6kkTLOuIqg5aUxXrVKuV2&index=2 -->
 
         <form  action="{% url 'accounts:checkout' %}" method="POST">
           {% csrf_token %}
@@ -534,7 +476,8 @@ cursor: pointer;
     </div>
   </div>
    <script>
-    function makeSum() {
+   // getting toal for stripe 'amount' element being the total of all the orders
+    function getTotal() {
       let total = 0;
       let prices = Array.from(document.getElementsByClassName('price'));
 
@@ -548,11 +491,8 @@ cursor: pointer;
 
     document.addEventListener("DOMContentLoaded", () => {
 
-      /*if (document.querySelector('#main_container').childNodes.length < 8) {
-        document.querySelector('.stripe-button-el').setAttribute('style', 'visibility: hidden !important;');
-      }*/
 
-      makeSum()
+      getTotal()
       let cancels = document.querySelectorAll('.cancel');
 
       cancels.forEach(cancel => {
@@ -573,13 +513,12 @@ cursor: pointer;
 
             element.parentNode.parentNode.addEventListener('animationend', () =>  {
             element.parentNode.parentNode.remove();
-            makeSum()
+            getTotal()
 
-            //if (document.querySelector('#main_container').childNodes.length < 8) {
+
             if (document.querySelector('.cart-row') == null ){
               console.log('Its 11');
-            
-              //document.querySelector('#submit').style.visibility = 'hidden';
+
               data.append('no_content', 'no_content');
             }
 
@@ -594,44 +533,45 @@ cursor: pointer;
               console.log(response);
             }
 
-
             });
           }
           if (element == document.querySelector('.stripe-button-el').firstChild) {
-            makeSum();
+            getTotal();
             let stripe = document.querySelector('#stripe');
             stripe.dataset.amount = document.querySelector('#total').innerHTML;
             let pre = document.querySelector('#total').innerHTML;
             document.querySelector('#amount').value = parseFloat(pre).toFixed(2) * 100;
-          
+
           }
       });
     });
   </script>
         </div>
-        
+
         <script>
+          //left side bar for the menu categories
         function openMenu(evt, categoryName) {
-          var i, tabcontent, tablinks;
+          var i, tabcontent, leftNav;
           tabcontent = document.getElementsByClassName("tabcontent");
           for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
           }
-          tablinks = document.getElementsByClassName("tablinks");
-          for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
+          leftNav = document.getElementsByClassName("leftNav");
+          for (i = 0; i < leftNav.length; i++) {
+            leftNav[i].className = leftNav[i].className.replace(" active", "");
           }
           document.getElementById(categoryName).style.display = "block";
           evt.currentTarget.className += " active";
         }
-        
+
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
         </script>
          <script >
+           // adding item to a shopping cart
   document.addEventListener("DOMContentLoaded", () => {
 
-    let buttons = document.querySelectorAll('.btn-secondary');
+    let buttons = document.querySelectorAll('.add');
     buttons.forEach(button => {
       button.onclick = function() {
 
@@ -639,8 +579,7 @@ cursor: pointer;
 
         let request = new XMLHttpRequest;
         let data = new FormData();
-        data.append("dish", this.dataset.dish);
-        data.append("type", this.dataset.type);
+        data.append("title", this.dataset.title);
         data.append("size", this.dataset.size);
         data.append("price", this.dataset.price);
 
@@ -650,7 +589,7 @@ cursor: pointer;
 
         request.onload = () => {
           let data = JSON.parse(request.responseText);
- 
+
           console.log(data);
         }
 
@@ -658,118 +597,6 @@ cursor: pointer;
     });
   });
   </script>
-   {% verbatim %}
-        <script id="check_template" type="text/x-handlerbar-template">
-          <div id="options">
-            <input id="nothing" class="checkboxes" data-add=""type="checkbox" value="no_addition">&nbspNo Thanks<br>
-          {{#each additions}}
-            <input class="checkboxes anything" data-price="{{ this.price }}" type="checkbox" value="{{ this.name }}">&nbsp{{ this.name }}<br>
-          {{/each}}
-          </div>
-        </script>
-        {% endverbatim %}
-        <script>
-        document.addEventListener("DOMContentLoaded", () => {
-
-          let buttons = document.querySelectorAll('.subs');
-
-          buttons.forEach(button => {
-            button.onclick = function() {
-              const template = Handlebars.compile(document.querySelector('#check_template').innerHTML);
-
-              let pre_add_list = (button.dataset.additions).split(",");
-              let add_list = [];
-
-
-              for (let k = 0; k < (pre_add_list.length - 1); k++) {
-                let prepare = pre_add_list[k].split(":");
-                add_list.push({name: prepare[0], price: prepare[1]});
-              }
-
-              const content = template({"additions": add_list});
-              console.log(content);
-
-              let container = document.querySelector('#container');
-              container.innerHTML = '';
-
-              container.insertAdjacentHTML('beforeend', content);
-              let nothing = document.querySelector('#nothing');
-
-              // Just avoid take more adds if nothing is checked
-              nothing.addEventListener('change', () => {
-                let anythings = document.querySelectorAll('.anything');
-
-                anythings.forEach(anything => {
-                  if (anything.disabled) {
-                    anything.removeAttribute("disabled");
-                  }else{
-                    anything.checked = false;
-                    anything.setAttribute("disabled", "disabled");
-                  }
-                });
-              });
-
-              let crsf = this.previousSibling.value;
-              let request = new XMLHttpRequest;
-              let data = new FormData();
-              data.append("dish", this.dataset.dish);
-              data.append("type", this.dataset.type);
-              data.append("size", this.dataset.size);
-
-              let price = parseFloat(this.dataset.price);
-
-              request.open('POST', '/added');
-              request.setRequestHeader('X-CSRFToken', crsf);
-
-              document.querySelector('#addToCart').onclick = function() {
-
-                if (document.querySelector('#nothing').checked == false) {
-
-                  let checkboxes = document.querySelectorAll('.checkboxes');
-                  let counter = 0;
-                  checkboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                      data.append("checkbox" + counter, checkbox.value);
-                      counter++;
-                      price += parseFloat(checkbox.dataset.price);
-                      console.log(price)
-                    }
-                  })
-
-                    request.open('POST', '/added');
-                    request.setRequestHeader('X-CSRFToken', crsf);
-                    data.append("price", price.toFixed(2));
-                    request.send(data);
-                    document.querySelector('#cancel').click();
-
-                    request.onload = () => {
-                      let data = JSON.parse(request.responseText);
-                      document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
-
-                      console.log(data);
-                    }
-
-                }else{
-
-                  request.open('POST', '/added');
-                  request.setRequestHeader('X-CSRFToken', crsf);
-                  data.append("price", price.toFixed(2));
-                  request.send(data);
-                  document.querySelector('#cancel').click();
-
-                  request.onload = () => {
-                    let data = JSON.parse(request.responseText);
-                   
-
-                    console.log(data);
-                  }
-                }
-              }
-            }
-          });
-        });
-        </script>
-       
       </div>
     </div>
   </div>

@@ -20,7 +20,6 @@ class MyUserLoginForm(forms.Form):
         }
     ), )
 
-    # https://docs.djangoproject.com/en/2.1/ref/forms/validation/#cleaning-and-validating-fields-that-depend-on-each-other
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
@@ -67,8 +66,6 @@ class MyUserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email1', 'email2', 'password']
-# doc reference
-    # https://docs.djangoproject.com/en/2.1/ref/forms/validation/#cleaning-and-validating-fields-that-depend-on-each-other
     def clean(self):
         super().clean()
         email1 = self.cleaned_data.get('email1')
