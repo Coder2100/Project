@@ -10,7 +10,7 @@
 Build  web application for handling a pizza restaurant’s online orders. Users will be able to browse the restaurant’s menu, add items to their cart, and submit their orders. Meanwhile, the restaurant owners will be able to add and update menu items, and view orders that have been placed.
 
 
-# The project have 3 App
+# The project have 3 Apps
 
 
 1. accounts App
@@ -53,7 +53,7 @@ Once the user clicked checkout with stripe, the orders will be cleared and the d
 
 1. clone repo in github
 
-2. cd into it.
+2. cd into it and run pip install -r requirements.txt.
 
 3. setup your your stripe account details  accounts.views and views/templates/menu.html
 
